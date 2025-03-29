@@ -1,0 +1,19 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Book {
+  id: Int!
+  title: String!
+  author: String!
+  publishedYear: String!
+  genre: String!
+}
+
+type Query {
+  getAllBooks: [Book!]!
+}
+
+type Mutation {
+  addBook(title: String!, author: String!, publishedYear: String!, genre: String!): Book!
+}
