@@ -8,6 +8,7 @@ type Book {
   author: String!
   publishedYear: String!
   genre: String!
+  coverImage: String
 }
 
 type Query {
@@ -15,5 +16,5 @@ type Query {
 }
 
 type Mutation {
-  addBook(title: String!, author: String!, publishedYear: String!, genre: String!): Book!
+  addBook(title: String!, author: String!, publishedYear: String!, genre: String!, coverImage: String): Book!
 }

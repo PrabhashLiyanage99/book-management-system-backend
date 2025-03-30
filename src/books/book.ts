@@ -16,4 +16,7 @@ export class Book {
 
   @Field()
   genre: string;
+
+  @Field({ nullable: true })
+  coverImage?: string;
 }
