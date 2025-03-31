@@ -8,4 +8,7 @@ export class PaginatedBooks {
 
   @Field(() => Int)
   totalCount: number;
+
+  @Field(() => Boolean)
+  noResults: boolean;
 }
