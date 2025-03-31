@@ -9,6 +9,13 @@ type Book {
   publishedYear: String!
   genre: String!
   coverImage: String
+  state: String!
+}
+
+type PaginatedBooks {
+  books: [Book!]!
+  totalCount: Int!
+  noResults: Boolean!
 }
 
 type User {
@@ -19,13 +26,15 @@ type User {
 }
 
 type Query {
-  getAllBooks: [Book!]!
+  getAllBooks(page: Int! = 1, pageSize: Int! = 10, title: String, author: String, genre: String): PaginatedBooks!
   getAllUsers: [User!]!
   validateToken: Boolean!
 }
 
 type Mutation {
-  addBook(title: String!, author: String!, publishedYear: String!, genre: String!, coverImage: String): Book!
+  addBook(title: String!, author: String!, publishedYear: String!, genre: String!, coverImage: String, state: String = "wishlist"): Book!
+  updateBook(id: Int!, title: String, author: String, publishedYear: String, genre: String, coverImage: String, state: String): Book!
+  deleteBook(id: Int!): Book!
   addUser(name: String!, email: String!, password: String!): User!
   signup(name: String!, email: String!, password: String!): String!
   login(email: String!, password: String!): String!
