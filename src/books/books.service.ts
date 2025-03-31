@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Book } from './book'
 
 @Injectable()
@@ -15,5 +15,28 @@ export class BooksService {
         };
         this.books.push(newBook);
         return newBook;
+    }
+
+    updateBook(id: number, bookData: Partial<Omit<Book, 'id'>>): Book {
+        const bookIndex = this.books.findIndex(book => book.id === id);
+        if (bookIndex === -1) {
+            throw new NotFoundException(`${id} Book not found`);
+        }
+
+        this.books[bookIndex] = {
+            ...this.books[bookIndex],
+            ...bookData
+        };
+
+        return this.books[bookIndex];
+    }
+
+    deleteBook(id: number): Book {
+        const bookIndex = this.books.findIndex(book => book.id === id);
+        if (bookIndex === -1) {
+            throw new NotFoundException(`{id} Book not found`);
+        }
+        const deleteBook = this.books.splice(bookIndex,1)[0];
+        return deleteBook;
     }
 }

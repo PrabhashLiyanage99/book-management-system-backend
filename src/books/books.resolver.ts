@@ -2,6 +2,8 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { BooksService } from './books.service';
 import { Book } from './book';
 import { GraphQLUpload } from 'graphql-upload-ts';
+import { time } from 'console';
+import { title } from 'process';
 // interface FileUpload {
 //     filename: string;
 //     mimetype: string;
@@ -51,4 +53,21 @@ export class BooksResolver {
             coverImage
         });
     }
-}
+
+    @Mutation(() => Book)
+    async updateBook(
+        @Args('id',{ type: () => Int }) id: number,
+        @Args('title',{ nullable:true }) title?: string,
+        @Args('author', { nullable: true }) author?: string,
+        @Args('publishedYear', { nullable: true }) publishedYear?: string,
+        @Args('genre',{ nullable: true }) genre?: string,
+        @Args('coverImage',{ nullable: true }) coverImage?: string
+    ) {
+        return this.booksService.updateBook(id,{ title, author, publishedYear, genre, coverImage });
+    }
+
+    @Mutation(() => Book)
+    async deleteBook(@Args('id', {type:() => Int }) id:number) {
+        return this.booksService.deleteBook(id);
+    }
+};

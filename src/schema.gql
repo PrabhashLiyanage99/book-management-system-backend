@@ -26,6 +26,8 @@ type Query {
 
 type Mutation {
   addBook(title: String!, author: String!, publishedYear: String!, genre: String!, coverImage: String): Book!
+  updateBook(id: Int!, title: String, author: String, publishedYear: String, genre: String, coverImage: String): Book!
+  deleteBook(id: Int!): Book!
   addUser(name: String!, email: String!, password: String!): User!
   signup(name: String!, email: String!, password: String!): String!
   login(email: String!, password: String!): String!
