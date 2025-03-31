@@ -19,4 +19,7 @@ export class Book {
 
   @Field({ nullable: true })
   coverImage?: string;
+
+  @Field()
+  state: string = 'wishlist';
 }
