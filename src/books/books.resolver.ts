@@ -2,14 +2,14 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { BooksService } from './books.service';
 import { Book } from './book';
 import { GraphQLUpload } from 'graphql-upload-ts';
-interface FileUpload {
-    filename: string;
-    mimetype: string;
-    encoding: string;
-    createReadStream: () => NodeJS.ReadableStream;
-  }
-import { createWriteStream } from 'fs';
-import { join } from 'path';
+// interface FileUpload {
+//     filename: string;
+//     mimetype: string;
+//     encoding: string;
+//     createReadStream: () => NodeJS.ReadableStream;
+//   }
+// import { createWriteStream } from 'fs';
+// import { join } from 'path';
 
 @Resolver(() => Book)
 export class BooksResolver {

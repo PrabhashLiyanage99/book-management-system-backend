@@ -11,10 +11,22 @@ type Book {
   coverImage: String
 }
 
+type User {
+  id: Int!
+  name: String!
+  email: String!
+  password: String
+}
+
 type Query {
   getAllBooks: [Book!]!
+  getAllUsers: [User!]!
+  validateToken: Boolean!
 }
 
 type Mutation {
   addBook(title: String!, author: String!, publishedYear: String!, genre: String!, coverImage: String): Book!
+  addUser(name: String!, email: String!, password: String!): User!
+  signup(name: String!, email: String!, password: String!): String!
+  login(email: String!, password: String!): String!
 }
