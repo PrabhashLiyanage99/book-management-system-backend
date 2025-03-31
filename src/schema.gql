@@ -11,6 +11,11 @@ type Book {
   coverImage: String
 }
 
+type PaginatedBooks {
+  books: [Book!]!
+  totalCount: Int!
+}
+
 type User {
   id: Int!
   name: String!
@@ -19,7 +24,7 @@ type User {
 }
 
 type Query {
-  getAllBooks: [Book!]!
+  getAllBooks(page: Int! = 1, pageSize: Int! = 10): PaginatedBooks!
   getAllUsers: [User!]!
   validateToken: Boolean!
 }

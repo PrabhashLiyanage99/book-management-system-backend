@@ -5,9 +5,23 @@ import { Book } from './book'
 export class BooksService {
     private books: Book[] = [];
 
-    findAll(): Book[] {
-        return this.books;
-    }
+    // findAll(page: number, pageSize: number): { books: Book[], totalCount: number} {
+    //     const skip = (page - 1)* pageSize;
+    //     const limit = pageSize;
+
+    //     const paginatedBooks = this.books.slice(skip, skip + limit);
+    //     const totalCount = this.books.length;
+    //     return { books: paginatedBooks, totalCount };
+    // }
+    findAll(page: number, pageSize: number): { books: Book[], totalCount: number } {
+        const start = (page - 1) * pageSize;
+        const end = page * pageSize;
+        const paginatedBooks = this.books.slice(start, end);
+        const totalCount = this.books.length;
+    
+        return { books: paginatedBooks, totalCount };
+      }
+    
 
     addBook(bookData: Omit<Book, 'id'>): Book {
         const newBook : Book = { id: this.books.length + 1, ...bookData,

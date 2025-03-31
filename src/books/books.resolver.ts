@@ -1,9 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { BooksService } from './books.service';
 import { Book } from './book';
-import { GraphQLUpload } from 'graphql-upload-ts';
-import { time } from 'console';
-import { title } from 'process';
+import { PaginatedBooks } from './paginated-books';
+
 // interface FileUpload {
 //     filename: string;
 //     mimetype: string;
@@ -17,10 +16,18 @@ import { title } from 'process';
 export class BooksResolver {
     constructor(private readonly booksService: BooksService) {}
 
-    @Query(() => [Book], { name: 'getAllBooks' })
-    findAll() {
-        return this.booksService.findAll();
+    @Query(() => PaginatedBooks, { name: 'getAllBooks' })
+    async findAll(
+      @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
+      @Args('pageSize', { type: () => Int, defaultValue: 10 }) pageSize: number,
+    ): Promise<PaginatedBooks> {
+      const result = await this.booksService.findAll(page, pageSize);
+      return {
+        books: result.books,
+        totalCount: result.totalCount,
+      };
     }
+
 
     @Mutation(() => Book)
     async addBook(
