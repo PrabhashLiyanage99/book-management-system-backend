@@ -5,43 +5,41 @@ import { Book } from './book'
 export class BooksService {
     private books: Book[] = [];
 
-    // findAll(page: number, pageSize: number): { books: Book[], totalCount: number} {
-    //     const skip = (page - 1)* pageSize;
-    //     const limit = pageSize;
-
-    //     const paginatedBooks = this.books.slice(skip, skip + limit);
-    //     const totalCount = this.books.length;
-    //     return { books: paginatedBooks, totalCount };
-    // }
+   
     findAll(page: number, pageSize: number, title?: string, author?: string, genre?: string): { books: Book[], totalCount: number, noResults: boolean } {
         let filteredBooks = this.books;
-
+    
         if (title) {
             filteredBooks = filteredBooks.filter(book => book.title.toLowerCase().includes(title.toLowerCase()));
         }
-
+    
         if (author) {
             filteredBooks = filteredBooks.filter(book => book.author.toLowerCase().includes(author.toLowerCase()));
         }
-
+    
         if (genre) {
             filteredBooks = filteredBooks.filter(book => book.genre.toLowerCase().includes(genre.toLowerCase()));
         }
-        const noResults = filteredBooks.length === 0;
-
+    
+        const totalCount = filteredBooks.length;
+        const noResults = totalCount === 0;
+        
         const start = (page - 1) * pageSize;
-        const end = page * pageSize;
-        const paginatedBooks = this.books.slice(start, end);
-        const totalCount = this.books.length;
+        const end = start + pageSize;
+        let paginatedBooks = filteredBooks.slice(start, end);
+        
+        if (paginatedBooks.length === 0 && !noResults) {
+            paginatedBooks = filteredBooks;
+        }
     
         return { books: paginatedBooks, totalCount, noResults };
-      }
+    }
     
 
     addBook(bookData: Omit<Book, 'id'>): Book {
         const newBook : Book = { id: this.books.length + 1, ...bookData,
             state: bookData.state || 'wishlist',
-            coverImage: bookData.coverImage || "https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale,dpr_1.5/jackets/9781408855713.jpg"         
+            coverImage: bookData.coverImage || "https://peoplesblog.co.in/sri-vedanta-swarajya-sangam/assets/img/books/default.jpeg"         
         };
         this.books.push(newBook);
         return newBook;
