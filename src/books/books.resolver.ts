@@ -4,15 +4,6 @@ import { Book } from './book';
 import { PaginatedBooks } from './paginated-books';
 import { title } from 'process';
 
-// interface FileUpload {
-//     filename: string;
-//     mimetype: string;
-//     encoding: string;
-//     createReadStream: () => NodeJS.ReadableStream;
-//   }
-// import { createWriteStream } from 'fs';
-// import { join } from 'path';
-
 @Resolver(() => Book)
 export class BooksResolver {
     constructor(private readonly booksService: BooksService) {}
@@ -43,20 +34,6 @@ export class BooksResolver {
         @Args('coverImage', {nullable: true }) coverImage?: string,
         @Args('state', { nullable: true, defaultValue: 'wishlist' }) state?: string
     ) {
-        //let coverImagePath: string | undefined;
-        
-        // if (coverImage) {
-        //     const { createReadStream, filename } = await coverImage;
-        //     const uniqueFilename = `${Date.now()}-${filename}`;
-        //     coverImagePath = `/uploads/${uniqueFilename}`;
-            
-        //     await new Promise<void>((resolve, reject) => {
-        //         createReadStream()
-        //             .pipe(createWriteStream(join(process.cwd(), 'public', coverImagePath)))
-        //             .on('finish', () => resolve())
-        //             .on('error', (error) => reject(error));
-        //     });
-        // }
     
         return this.booksService.addBook({ 
             title, 
